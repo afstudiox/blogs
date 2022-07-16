@@ -2,7 +2,7 @@ const errors = {
   ValidationError: 400,
   UnauthorizedError: 401,
   NotFoundError: 404,
-  SequelizeUniqueConstraintError: 409,
+  UniqueConstraintError: 409,
 };
 
 /**

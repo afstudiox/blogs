@@ -1,5 +1,6 @@
 const express = require('express');
 const authRoute = require('./routes/authRoute');
+const userRoute = require('./routes/userRoute');
 const errorHandlerMiddleware = require('./middlewares/errorHandlerMiddleware');
 // ...
 
@@ -9,6 +10,7 @@ app.use(express.json());
 
 // minhas rotas
 app.use('/login', authRoute);
+app.use('/user', userRoute);
 
 // Middleware de Erros
 app.use(errorHandlerMiddleware);

@@ -16,8 +16,15 @@ const throwValidationError = (message) => {
   throw err;
 };
 
+const throwUniqueConstraintError = (message) => {
+  const err = new Error(message);
+  err.name = 'UniqueConstraintError';
+  throw err;
+};
+
 module.exports = {
   thrownNotFoundError,
   throwUnauthorizedError,
   throwValidationError,
+  throwUniqueConstraintError,
 };

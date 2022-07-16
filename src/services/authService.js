@@ -7,9 +7,8 @@ const { throwValidationError, throwUnauthorizedError } = require('./utils');
 const secret = process.env.JWT_SECRET;
 
 const authService = {
-  // faz a validação dos dados recebidos do controller (body)
   validateBodyLogin: async (unknow) => {
-    // schema para validação do body com mensagens personalizadas
+    // schema para validação do body
     const schema = Joi.object({
       email: Joi.string().required().email()
         .messages({ 'string.empty': 'Some required fields are missing' }),
@@ -25,10 +24,7 @@ const authService = {
   // de forma errada, retorna um erro de Validation e não de NotFound
   // mas para passar no requisito deixei dessa forma
   checkUserByEmail: async (email) => {
-    const user = await models.User.findOne({
-      where: { email },
-      raw: true,
-    });
+    const user = await models.User.findOne({ where: { email }, raw: true });
     if (!user) throwValidationError('Invalid fields');
     return user;
   },

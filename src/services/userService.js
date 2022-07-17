@@ -1,9 +1,6 @@
 const Joi = require('joi');
-const jwt = require('jsonwebtoken');
 const models = require('../database/models');
 const { throwUniqueConstraintError } = require('./utils');
-
-const secret = process.env.JWT_SECRET;
 
 const userService = {
   validateBodyUser: async (data) => {
@@ -29,12 +26,21 @@ const userService = {
     return result;
   },
 
-  // cria o token e retorna ao controller
-  makeToken: async (userCreated) => {
-    const payload = userCreated;
-    const token = jwt.sign(payload, secret);
-    return token;
+  readUsers: async () => {
+    const users = await models.User.findAll({
+      attributes: {
+        exclude: ['password', 'createdAt', 'updatedAt'],
+      },
+    });
+    return users;
   },
+
+  getUserById: async (id) => {
+    const user = await models.User.findByPk(id);
+    const userJson = user.toJSON();
+    return userJson;
+  },
+
 };
 
 module.exports = userService;

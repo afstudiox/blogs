@@ -1,3 +1,4 @@
+const authService = require('../services/authService');
 const userService = require('../services/userService');
 
 const userController = {
@@ -9,12 +10,18 @@ const userController = {
     await userService.userExist(data);
     // cria o usuário no banco de dados
     const user = await userService.createUser(data);
-    // console.log(user.toJSON());
+    const userJson = user.toJSON();
     // gera o token para retornar ao usuário
-    const token = await userService.makeToken(user.toJSON());
+    const token = await authService.makeToken(userJson);
     // retorna o token ao usuário
     res.status(201).json({ token });
   },
+
+  readUsers: async (req, res) => {
+    const users = await userService.readUsers();
+    res.status(200).json(users);
+  },
+
 };
 
 module.exports = userController;

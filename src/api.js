@@ -15,8 +15,6 @@ app.use('/user', userRoute);
 // Middleware de Erros
 app.use(errorHandlerMiddleware);
 
-// ...
-
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
 module.exports = app;

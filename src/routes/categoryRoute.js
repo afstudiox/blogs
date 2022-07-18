@@ -5,5 +5,6 @@ const validateToken = require('../middlewares/validateToken');
 const categoryRoute = Router();
 
 categoryRoute.post('/', validateToken, categoryController.create);
+categoryRoute.get('/', validateToken, categoryController.read);
 
 module.exports = categoryRoute;

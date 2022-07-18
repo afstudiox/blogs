@@ -17,6 +17,15 @@ const categoryService = {
     return category;
   },
 
+  read: async () => {
+    const categories = await models.Category.findAll({
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+      },
+    });
+    return categories;
+  },
+
 };
 
 module.exports = categoryService;

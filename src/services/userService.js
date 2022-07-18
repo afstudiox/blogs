@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const models = require('../database/models');
-const { throwUniqueConstraintError } = require('./utils');
+const { throwUniqueConstraintError, thrownNotFoundError } = require('./utils');
 
 const userService = {
   validateBodyUser: async (data) => {
@@ -35,10 +35,15 @@ const userService = {
     return users;
   },
 
-  getUserById: async (id) => {
-    const user = await models.User.findByPk(id);
-    const userJson = user.toJSON();
-    return userJson;
+  getUserById: async ({ id }) => {
+    const user = await models.User.findOne({ 
+      where: { id }, 
+      attributes: { 
+        exclude: ['password', 'createdAt', 'updatedAt'] },
+      raw: true,
+    });
+    if (!user) thrownNotFoundError('User does not exist');
+    return user;
   },
 
 };

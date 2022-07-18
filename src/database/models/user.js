@@ -33,6 +33,9 @@ const attributes = {
 
 /** @param {import('sequelize').Sequelize} sequelize */
 module.exports = (sequelize) => {
-  const User = sequelize.define('User', attributes, { tableName: 'Users' });
+  const User = sequelize.define(
+    'User',
+    attributes,
+    { tableName: 'Users' });
   return User;
 }

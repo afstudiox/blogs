@@ -2,6 +2,7 @@ const Joi = require('joi');
 const { sequelize } = require('../database/models');
 const models = require('../database/models');
 const categoryService = require('./categoryService');
+const { thrownNotFoundError } = require('./utils');
 
 const postService = { 
   validateBody: async (data) => {
@@ -47,9 +48,27 @@ const postService = {
           attributes: { exclude: ['createdAt', 'updatedAt'] }, 
         },
       ],
-      // raw: true, ATENÇÃOOOOOOOO
      });
     return posts;
+  },
+
+  readId: async ({ id }) => {
+    const post = await models.BlogPost.findOne({
+      where: { id },
+      include: [
+        { model: models.User,
+          as: 'user',
+          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }, 
+        },
+        { model: models.Category,
+          through: { attributes: [] },
+          as: 'categories',
+          attributes: { exclude: ['createdAt', 'updatedAt'] }, 
+        },
+      ],
+    });
+    if (!post) thrownNotFoundError('Post does not exist');
+    return post;
   },
 
 };

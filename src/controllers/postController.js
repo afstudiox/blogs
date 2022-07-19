@@ -15,6 +15,11 @@ const postController = {
     const posts = await postService.read();
     return res.status(200).json(posts);
   },
+
+  readId: async (req, res) => {
+    const post = await postService.readId(req.params);
+    return res.status(200).json(post);
+  },
 };
   
 module.exports = postController;

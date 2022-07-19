@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const models = require('../database/models');
+const { throwValidationError } = require('./utils');
 
 const categoryService = {
   validateBody: async (data) => {
@@ -24,6 +25,11 @@ const categoryService = {
       },
     });
     return categories;
+  },
+
+  readById: async (id) => {
+    const categories = await models.Category.findByPk(id);
+    if (!categories) throwValidationError('"categoryIds" not found');
   },
 
 };

@@ -21,17 +21,13 @@ module.exports = {
           model: 'Users',
           key: 'id'
       }},
-      createdAt: {
+      published: {
         allowNull: false,
         type: Sequelize.DATE,
-        field: 'published',
-        defaultValue: Sequelize.fn('now')
       },
-      updatedAt: {
+      updated: {
         allowNull: false,
         type: Sequelize.DATE,
-        field: 'updated',
-        defaultValue: Sequelize.fn('now')
       }
     });
   },

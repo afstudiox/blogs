@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
   const BlogPost = sequelize.define(
     'BlogPost',
     attributes,
-    { tableName: 'BlogPosts'}
+    { tableName: 'BlogPosts', timestamps: true, createdAt: `published`, updatedAt: 'updated' }
   )
   BlogPost.associate = (models) => {
     BlogPost.belongsTo(models.User, {

@@ -34,6 +34,24 @@ const postService = {
   return result;
   },
 
+  read: async () => {
+     const posts = await models.BlogPost.findAll({
+      include: [
+        { model: models.User,
+          as: 'user',
+          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }, 
+        },
+        { model: models.Category,
+          through: { attributes: [] },
+          as: 'categories',
+          attributes: { exclude: ['createdAt', 'updatedAt'] }, 
+        },
+      ],
+      // raw: true, ATENÇÃOOOOOOOO
+     });
+    return posts;
+  },
+
 };
 
 module.exports = postService;

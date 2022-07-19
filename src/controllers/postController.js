@@ -10,6 +10,11 @@ const postController = {
     const insertedData = await postService.create(data);
     return res.status(201).json(insertedData);
   },
+
+  read: async (req, res) => {
+    const posts = await postService.read();
+    return res.status(200).json(posts);
+  },
 };
   
 module.exports = postController;

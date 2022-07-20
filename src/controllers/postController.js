@@ -51,6 +51,13 @@ const postController = {
     // console.log(postDeleted);
     res.sendStatus(204);
   },
+  /** @type {import('express').RequestHandler} */
+  readQuery: async (req, res) => {
+    const { q } = req.query;
+    const search = await postService.readQuery(q);
+    res.status(200).json(search);
+  },
+
 };
   
 module.exports = postController;

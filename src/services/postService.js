@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { Op } = require('sequelize');
 const { sequelize } = require('../database/models');
 const models = require('../database/models');
 const categoryService = require('./categoryService');
@@ -82,6 +83,27 @@ const postService = {
     });
     if (!post) thrownNotFoundError('Post does not exist');
     return post;
+  },
+
+  // https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+  readQuery: async (query) => {
+    const search = await models.BlogPost.findAll({
+      where: { [Op.or]: [
+        { title: { [Op.like]: `%${query}%` } },
+        { content: { [Op.like]: `%${query}%` } },
+      ] },
+      include: [
+        { model: models.User,
+           as: 'user',
+          attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }, 
+        },
+        { model: models.Category,
+          through: { attributes: [] },
+          as: 'categories',
+          attributes: { exclude: ['createdAt', 'updatedAt'] }, 
+        }],
+    });
+    return search;
   },
 
   update: async (id, data) => {

@@ -4,6 +4,7 @@ const validateToken = require('../middlewares/validateToken');
 
 const postRoute = Router();
 
+postRoute.get('/search', validateToken, postController.readQuery);
 postRoute.post('/', validateToken, postController.create);
 postRoute.get('/', validateToken, postController.read);
 postRoute.get('/:id', validateToken, postController.readId);

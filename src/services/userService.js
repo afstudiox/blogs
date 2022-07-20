@@ -47,7 +47,7 @@ const userService = {
   },
 
   delete: async (id) => {
-    await models.User.destroy({
+    await models.BlogPost.destroy({
       where: { id },
     });
   },

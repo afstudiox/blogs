@@ -29,9 +29,8 @@ const userController = {
 
   delete: async (req, res) => {
     const { id } = await authService.readToken(req.headers.authorization);
-    console.log(id);
     await userService.delete(id);
-    return res.status(204);
+    res.sendStatus(204);
   },
   
 };

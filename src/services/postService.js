@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { sequelize } = require('../database/models');
 const models = require('../database/models');
 const categoryService = require('./categoryService');
-const { throwUnauthorizedError } = require('./utils');
+const { throwUnauthorizedError, thrownNotFoundError } = require('./utils');
 
 const postService = { 
   validateBody: async (data) => {

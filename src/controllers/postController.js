@@ -41,18 +41,15 @@ const postController = {
     const { id } = req.params;
     // identifica o usuário do token 
     const user = await authService.readToken(req.headers.authorization);
-    // verificar se o post a ser alterado é da pessoa autenticada 
-    await postService.checkUserOwner(id, user.id); 
-    console.log('O usuário é dono do post');
     // verificar se o post existe
-    await postService.readId(req.params);
-    console.log('O post existe');
+    const post = await postService.readId(req.params);
+    const postJson = post.toJSON();
+    // verificar se o post a ser alterado é da pessoa autenticada 
+    await postService.checkUserOwner(postJson.userId, user.id); 
     // deletar o post
-    console.log('Vou apagar o post');
     await postService.delete(id);
-    console.log('Consegui apagar o post');
     // console.log(postDeleted);
-    return res.status(204);
+    res.sendStatus(204);
   },
 };
   

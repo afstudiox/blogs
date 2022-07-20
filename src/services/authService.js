@@ -6,17 +6,6 @@ const { throwValidationError, throwUnauthorizedError } = require('./utils');
 const secret = process.env.JWT_SECRET; // atribui o secret das variaveis de ambiente na constante secret
 
 const authService = {
-  // validateAuthorization: async (unknown) => {
-  //   const schema = Joi.string().required();
-  //   try {
-  //     const result = await schema.validateAsync(unknown);
-  //     const [, token] = result.split(' ');
-  //     return token;
-  //   } catch (error) {
-  //     throwUnauthorizedError('Token not found');
-  //   }
-  // },
-
   validateBodyLogin: async (unknow) => { // recebe um objeto como parametro para ser testado
     const schema = Joi.object({
       email: Joi.string().required()

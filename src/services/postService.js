@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { sequelize } = require('../database/models');
 const models = require('../database/models');
 const categoryService = require('./categoryService');
-const { thrownNotFoundError } = require('./utils');
+const { throwUnauthorizedError } = require('./utils');
 
 const postService = { 
   validateBody: async (data) => {
@@ -14,6 +14,19 @@ const postService = {
     }).messages({ 'string.empty': 'Some required fields are missing' });
     const result = await schema.validateAsync(data);
     return result;
+  },
+
+  validateBodyUpdate: async (data) => {
+    const schema = Joi.object({
+      title: Joi.string().required(),
+      content: Joi.string().required(),
+    }).messages({ 'string.empty': 'Some required fields are missing' });
+    const result = await schema.validateAsync(data);
+    return result;
+  },
+
+  checkUserOwner: async (parmId, userId) => {
+    if (Number(parmId) !== userId) throwUnauthorizedError('Unauthorized user');
   },
 
   checkCategories: async ({ categoryIds }) => {
@@ -69,6 +82,15 @@ const postService = {
     });
     if (!post) thrownNotFoundError('Post does not exist');
     return post;
+  },
+
+  update: async (id, data) => {
+    const { title, content } = data;
+    // enviar as alterações para ao record especifico
+    await models.BlogPost.update({ title, content }, { where: { id } });
+    // buscar as informações alteradas e retorna
+    const postUpdated = await postService.readId({ id });
+    return postUpdated;
   },
 
 };

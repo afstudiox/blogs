@@ -8,5 +8,6 @@ postRoute.post('/', validateToken, postController.create);
 postRoute.get('/', validateToken, postController.read);
 postRoute.get('/:id', validateToken, postController.readId);
 postRoute.put('/:id', validateToken, postController.update);
+postRoute.delete('/:id', validateToken, postController.delete);
 
 module.exports = postRoute;

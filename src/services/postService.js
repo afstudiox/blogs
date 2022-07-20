@@ -93,6 +93,13 @@ const postService = {
     return postUpdated;
   },
 
+  delete: async (id) => { 
+    const postDeleted = await models.BlogPost.destroy({
+      where: { id },
+    });
+    return postDeleted;
+  },
+
 };
 
 module.exports = postService;

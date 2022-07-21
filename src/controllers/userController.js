@@ -2,7 +2,6 @@ const authService = require('../services/authService');
 const userService = require('../services/userService');
 
 const userController = {
-  /** @type {import('express').RequestHandler} */
   createUser: async (req, res) => {
     // valida os dados revebidos peolo body
     const data = await userService.validateBodyUser(req.body);

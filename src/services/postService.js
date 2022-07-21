@@ -89,8 +89,8 @@ const postService = {
   readQuery: async (query) => {
     const search = await models.BlogPost.findAll({
       where: { [Op.or]: [
-        { title: { [Op.like]: `%${query}%` } },
-        { content: { [Op.like]: `%${query}%` } },
+        { title: { [Op.substring]: query } },
+        { content: { [Op.substring]: query } },
       ] },
       include: [
         { model: models.User,

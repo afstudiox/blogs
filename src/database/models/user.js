@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 
-/** @type {import('sequelize').ModelAttributes} */
 const attributes = {
   id: {
     allowNull: false,
@@ -31,7 +30,6 @@ const attributes = {
   }
 };
 
-/** @param {import('sequelize').Sequelize} sequelize */
 module.exports = (sequelize) => {
   const User = sequelize.define(
     'User',
